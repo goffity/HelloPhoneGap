@@ -2,29 +2,105 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="sencha-touch.css" rel="stylesheet" type="text/css" />
+<link href="android.css" rel="stylesheet" type="text/css" />
+<link href="index.css" rel="stylesheet" />
+
+
+<script type="text/javascript" src="sencha-touch.js"></script>
+<script type="text/javascript" src="phonegap.0.9.5.js"></script>
+<script type="text/javascript" src="index2.js"></script>
 <title>Untitled Document</title>
+<script type="text/javascript">
+Ext.setup( {
+	//tabletStartupScreen : 'tablet_startup.png',
+	//phoneStartupScreen : 'phone_startup.png',
+	//icon : 'icon.png',
+	//glossOnIcon : false,
+	onReady : function() {
+		var timeline = new Ext.Component(
+				{
+					title : 'Timeline',
+					cls : 'timeline',
+					scroll : 'vertical',
+					html: '<iframe src ="index.html" scroll="yes"></iframe>'
+					
+					/*tpl : [
+							'<tpl for=".">',
+							'<div class="tweet">',
+							'<div class="avatar"><img src="{profile_image_url}" /></div>',
+							'<div class="tweet-content">',
+							'<h2>{from_user}</h2>', '<p>{text}</p>',
+							'</div>', '</div>', '</tpl>' ]*/
+				});
+
+		var refresh = function(position) {
+			var coords = position || map.geo.coords;
+			if (coords) {
+				map.update(coords);
+
+				Ext.util.JSONP
+						.request( {
+							url : 'http://search.twitter.com/search.json',
+							callbackKey : 'callback',
+							params : {
+								geocode : coords.latitude + ','
+										+ coords.longitude + ','
+										+ '5mi',
+								rpp : 30
+							},
+							callback : function(data) {
+								if (data && data.results
+										&& !!data.results.length) {
+									data = data.results;
+
+									// Update the tweets in timeline
+									timeline.update(data);
+
+									// Add points to the map
+									for ( var i = 0, ln = data.length; i < ln; i++) {
+										addMarker(data[i]);
+									}
+								} else {
+									timeline.getContentTarget().update(
+											'No Results Available');
+								}
+							}
+						});
+			}
+		};
+
+		var map = new Ext.Map( {
+			title : 'Map',
+			useCurrentLocation : true,
+			mapOptions : {
+				zoom : 11
+			},
+			listeners : {
+				maprender : function(mapC, map) {
+					refresh(this.geo.coords);
+					this.geo.on('update', refresh);
+				}
+			}
+		});
+
+		;
+
+		var panel = new Ext.TabPanel( {
+			fullscreen : true,
+			scroll : 'both',
+			cardSwitchAnimation : 'slide',
+			//items: [map, ff]
+			items : [ timeline, map ]
+		});
+		
+
+		
+		panel.doComponentLayout();
+	}
+});
+</script>
 </head>
 
-<body>
-<h1>iframe display</h1>
-<p><br />
-  index2.html
-</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>XXXXX</p>
-</body>
+<body></body>
 </html>

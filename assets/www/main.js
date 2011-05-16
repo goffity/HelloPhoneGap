@@ -3,7 +3,7 @@
 function onLoad() {
 	document.addEventListener("deviceready", onDeviceReady, false);
 
-	document.getElementById('ifr').setAttribute('src', 'index2.html');
+	//document.getElementById('ifr').setAttribute('src', 'index2.html');
 }
 
 // PhoneGap is ready to be used!
@@ -90,11 +90,3 @@ function getPhoto(source) {
 function onFail(mesage) {
 	alert('Failed because: ' + message);
 }
-
-// sencha
-
-Ext.setup( {
-	onReady : function() {
-		alert("sencha");
-	}
-});
