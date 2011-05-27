@@ -10,36 +10,16 @@ Ext.setup({
 			scroll : 'vertical',
 			html : '<div id="a">abc</div>',
 			listeners : {
-				render : function(c) {
-					c.getEl().on('click', function() {
-						alert('rrrr click');
-					}, c);
-				},
+				// render : function(c) {
+				// c.getEl().on('click', function() {
+				// alert('rrrr click');
+				// }, c);
+				// },
 				activate : function() {
 					Ext.Msg.alert("", "Tab geactiveerd");
 				}
 			}
-		// addListener : function('click',){
-		//				
-		// }
-		// initComponent: function(){
-		// alert('initComponent');
-		// }
-		// onRender : function() {
-		// alert('onrender');
-		//
-		// }
-		// tpl : [
-		// '<tpl for=".">',
-		// '<div class="tweet">',
-		// '<div class="avatar"><img src="{profile_image_url}" /></div>',
-		// '<div class="tweet-content">',
-		// '<h2>{from_user}</h2>', '<p>{text}</p>',
-		// '</div>', '</div>', '</tpl>' ]
 		});
-		// timeline.addListener('onclick', function() {
-		// alert('onclick');
-		// });
 		timeline.on('click', function() {
 			alert('t click');
 		}, this);
@@ -48,36 +28,7 @@ Ext.setup({
 			alert('refresh');
 			var a = document.getElementById('a');
 			a.innerHTML = a.innerHTML + '<br/> abc';
-			// var coords = position || map.geo.coords;
-			// if (coords) {
-			// map.update(coords);
-			//
-			// Ext.util.JSONP.request({
-			// url : 'http://search.twitter.com/search.json',
-			// callbackKey : 'callback',
-			// params : {
-			// geocode : coords.latitude + ',' + coords.longitude
-			// + ',' + '5mi',
-			// rpp : 30
-			// },
-			// callback : function(data) {
-			// if (data && data.results && !!data.results.length) {
-			// data = data.results;
-			//
-			// // Update the tweets in timeline
-			// timeline.update(data);
-			//
-			// // Add points to the map
-			// for ( var i = 0, ln = data.length; i < ln; i++) {
-			// addMarker(data[i]);
-			// }
-			// } else {
-			// timeline.getContentTarget().update(
-			// 'No Results Available');
-			// }
-			// }
-			// });
-			// }
+			// do something ...
 		};
 
 		var map = new Ext.Map({
@@ -97,13 +48,14 @@ Ext.setup({
 		var panel = new Ext.TabPanel({
 			fullscreen : true,
 			cardSwitchAnimation : 'slide',
-			items : [ timeline, map ],
-			listeners : {
-				click : function() {
-					alert('click');
-				},
-				element : timeline
-			}
+			items : [ timeline, map ]
+		// ,
+		// listeners : {
+		// click : function() {
+		// alert('click');
+		// },
+		// element : timeline
+		// }
 		});
 
 		var markers = {};
